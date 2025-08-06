@@ -3,26 +3,26 @@
     <button class="close-icon" (click)="closeModal(); $event.stopPropagation()">
       <i class="material-icons">close</i>
     </button>
-    
+
     <div *ngIf="task" class="task-detail-container">
       <div *ngIf="!editando; else editForm">
         <h2>{{ task.titulo }}</h2>
-        
+
         <div class="priority-badge" [class]="'priority-' + task.prioridade">
           {{ task.prioridade | titlecase }}
         </div>
-        
+
         <div class="task-meta">
           <span><strong>Status:</strong> {{ getStatusText(task.status) }}</span>
           <span><strong>Criada em:</strong> {{ task.dataInicio | date:'dd/MM/yyyy' }}</span>
           <span><strong>Prazo:</strong> {{ task.dataFim | date:'dd/MM/yyyy' }}</span>
         </div>
-        
+
         <div class="task-description">
           <h3>Descrição</h3>
           <p>{{ task.descricao || 'Nenhuma descrição fornecida' }}</p>
         </div>
-        
+
         <div class="task-actions">
           <button class="btn edit-btn" (click)="iniciarEdicao(); $event.stopPropagation()">
             <i class="material-icons">edit</i>Editar
@@ -43,7 +43,8 @@
 
           <div class="form-group">
             <label for="descricao">Descrição</label>
-            <textarea id="descricao" [(ngModel)]="taskEditado.descricao" name="descricao" required #descricao="ngModel"></textarea>
+            <textarea id="descricao" [(ngModel)]="taskEditado.descricao" name="descricao" required
+              #descricao="ngModel"></textarea>
             <div *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)" class="error-message">
               Descrição é obrigatória
             </div>
@@ -51,7 +52,8 @@
 
           <div class="form-group">
             <label for="prioridade">Prioridade</label>
-            <select id="prioridade" [(ngModel)]="taskEditado.prioridade" name="prioridade" required #prioridade="ngModel">
+            <select id="prioridade" [(ngModel)]="taskEditado.prioridade" name="prioridade" required
+              #prioridade="ngModel">
               <option value="" disabled>Selecione uma prioridade</option>
               <option value="baixa">Baixa</option>
               <option value="media">Média</option>
@@ -63,15 +65,26 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="dataFim">Prazo</label>
-            <input type="date" id="dataFim" [(ngModel)]="dataFimString" name="dataFim" required #dataFim="ngModel"
-                   [min]="taskEditado.dataInicio | date:'yyyy-MM-dd'">
-            <div *ngIf="dataFim.invalid && (dataFim.dirty || dataFim.touched)" class="error-message">
-              Data final é obrigatória
+          <div class="date-container">
+            <div class="form-group">
+              <label for="dataInicio">Data de Início</label>
+              <input type="date" id="dataInicio" [(ngModel)]="dataInicioString" name="dataInicio" required
+                #dataInicio="ngModel" (input)="onDataInicioChange()">
+              <div *ngIf="dataInicio.invalid && (dataInicio.dirty || dataInicio.touched)" class="error-message">
+                Data de início é obrigatória
+              </div>
             </div>
-            <div *ngIf="dataFimInvalida" class="error-message">
-              A data final não pode ser anterior à data de início
+
+            <div class="form-group">
+              <label for="dataFim">Prazo</label>
+              <input type="date" id="dataFim" [(ngModel)]="dataFimString" name="dataFim" required #dataFim="ngModel"
+                [min]="dataInicioString" (input)="onDataFimChange()">
+              <div *ngIf="dataFim.invalid && (dataFim.dirty || dataFim.touched)" class="error-message">
+                Data final é obrigatória
+              </div>
+              <div *ngIf="dataFimInvalida" class="error-message">
+                A data final não pode ser anterior à data de início
+              </div>
             </div>
           </div>
 

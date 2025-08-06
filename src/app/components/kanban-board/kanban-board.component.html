@@ -6,11 +6,9 @@
       <span class="task-count">{{ tarefasPendentes.length }}</span>
     </div>
     <div class="column-content">
-      <div *ngFor="let tarefa of tarefasPendentes"
-           class="task-card"
-           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
-           (click)="selecionarTarefa(tarefa)">
-        
+      <div *ngFor="let tarefa of tarefasPendentes" class="task-card"
+        [ngClass]="getPrioridadeColorClass(tarefa.prioridade)" (click)="selecionarTarefa(tarefa)">
+
         <div class="task-header">
           <h4>{{ tarefa.titulo }}</h4>
           <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
@@ -22,13 +20,13 @@
 
         <div class="task-dates">
           <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
-          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+          <small class="deadline"><strong>Prazo:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
         </div>
 
         <div class="task-footer">
           <div class="task-actions">
             <button class="action-btn move" (click)="moverTarefa(tarefa, 'em-processo'); $event.stopPropagation()">
-              Em andamento
+              Iniciar
             </button>
           </div>
         </div>
@@ -43,11 +41,9 @@
       <span class="task-count">{{ tarefasEmProcesso.length }}</span>
     </div>
     <div class="column-content">
-      <div *ngFor="let tarefa of tarefasEmProcesso"
-           class="task-card"
-           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
-           (click)="selecionarTarefa(tarefa)">
-        
+      <div *ngFor="let tarefa of tarefasEmProcesso" class="task-card"
+        [ngClass]="getPrioridadeColorClass(tarefa.prioridade)" (click)="selecionarTarefa(tarefa)">
+
         <div class="task-header">
           <h4>{{ tarefa.titulo }}</h4>
           <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
@@ -59,7 +55,7 @@
 
         <div class="task-dates">
           <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
-          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+          <small class="deadline"><strong>Prazo:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
         </div>
 
         <div class="task-footer">
@@ -83,11 +79,9 @@
       <span class="task-count">{{ tarefasFinalizadas.length }}</span>
     </div>
     <div class="column-content">
-      <div *ngFor="let tarefa of tarefasFinalizadas"
-           class="task-card"
-           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
-           (click)="selecionarTarefa(tarefa)">
-        
+      <div *ngFor="let tarefa of tarefasFinalizadas" class="task-card"
+        [ngClass]="getPrioridadeColorClass(tarefa.prioridade)" (click)="selecionarTarefa(tarefa)">
+
         <div class="task-header">
           <h4>{{ tarefa.titulo }}</h4>
           <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
@@ -99,14 +93,12 @@
 
         <div class="task-dates">
           <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
-          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+          <small class="deadline"><strong>Prazo:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
         </div>
 
         <div class="task-footer">
           <div class="task-actions">
-            <button class="action-btn move" (click)="moverTarefa(tarefa, 'pendente'); $event.stopPropagation()">
-              <i class="material-icons">reply</i> Pendente
-            </button>
+            <!-- Botão "Pendente" removido para tarefas concluídas -->
           </div>
         </div>
       </div>
@@ -114,8 +106,5 @@
   </div>
 </div>
 
-<app-task-detail
-  [task]="tarefaSelecionada"
-  [isVisible]="modalAberto"
-  (close)="fecharModal()"
-></app-task-detail>
+<app-task-detail [task]="tarefaSelecionada" [isVisible]="modalAberto" (close)="fecharModal()"
+  (edit)="editarTarefa($event)"></app-task-detail>
