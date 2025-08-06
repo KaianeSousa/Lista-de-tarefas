@@ -1,0 +1,85 @@
+<div class="modal-overlay" (click)="cancelar()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="cancelar()">&times;</button>
+    <div class="form-container">
+      <h2>Adicionar Tarefa</h2>
+
+      <div class="form-group">
+        <label for="titulo">Título da Tarefa:</label>
+        <input
+          id="titulo"
+          [(ngModel)]="task.title"
+          (input)="onTituloChange()"
+          [class.invalid]="tituloInvalido"
+          placeholder="Digite o título da tarefa"
+        />
+        <div *ngIf="erroTitulo" class="error-message">{{ erroTitulo }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea
+          id="descricao"
+          class="description"
+          [(ngModel)]="task.description"
+          (input)="onDescricaoChange()"
+          [class.invalid]="descricaoInvalida"
+          placeholder="Descreva sua tarefa"
+        ></textarea>
+        <div *ngIf="erroDescricao" class="error-message">{{ erroDescricao }}</div>
+      </div>
+
+      <div class="date-container">
+        <div class="form-group">
+          <label for="dataInicio">Data de Início:</label>
+          <input
+            id="dataInicio"
+            type="date"
+            [(ngModel)]="task.startDate"
+            (input)="onDataChange()"
+            [class.invalid]="dataInvalida"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="dataFim">Data de Fim:</label>
+          <input
+            id="dataFim"
+            type="date"
+            [(ngModel)]="task.endDate"
+            (input)="onDataChange()"
+            [class.invalid]="dataInvalida"
+          />
+        </div>
+      </div>
+      <div *ngIf="erroData" class="error-message">{{ erroData }}</div>
+
+      <div class="form-group">
+        <label for="prioridade">Prioridade:</label>
+        <select
+          id="prioridade"
+          [(ngModel)]="task.priority"
+          (change)="onPrioridadeChange()"
+          [class.invalid]="prioridadeInvalida"
+        >
+          <option value="" disabled>Selecione uma prioridade</option>
+          <option value="low">Baixa</option>
+          <option value="medium">Média</option>
+          <option value="high">Alta</option>
+          <option value="urgent">Urgente</option>
+        </select>
+        <div *ngIf="erroPrioridade" class="error-message">{{ erroPrioridade }}</div>
+      </div>
+
+      <div class="button-container">
+        <button
+          class="btn-add"
+          (click)="adicionarTarefa()"
+        >
+          Adicionar
+        </button>
+        <button class="btn-clear" (click)="limparFormulario()">Limpar</button>
+      </div>
+    </div>
+  </div>
+</div>

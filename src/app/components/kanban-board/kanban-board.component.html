@@ -1,0 +1,121 @@
+<div class="kanban-board">
+  <!-- Pendentes -->
+  <div class="kanban-column">
+    <div class="column-header">
+      <h3>Pendentes</h3>
+      <span class="task-count">{{ tarefasPendentes.length }}</span>
+    </div>
+    <div class="column-content">
+      <div *ngFor="let tarefa of tarefasPendentes"
+           class="task-card"
+           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
+           (click)="selecionarTarefa(tarefa)">
+        
+        <div class="task-header">
+          <h4>{{ tarefa.titulo }}</h4>
+          <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+
+        <p class="task-description" *ngIf="tarefa.descricao">{{ tarefa.descricao }}</p>
+
+        <div class="task-dates">
+          <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
+          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+        </div>
+
+        <div class="task-footer">
+          <div class="task-actions">
+            <button class="action-btn move" (click)="moverTarefa(tarefa, 'em-processo'); $event.stopPropagation()">
+              Em andamento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Em andamento -->
+  <div class="kanban-column">
+    <div class="column-header">
+      <h3>Em andamento</h3>
+      <span class="task-count">{{ tarefasEmProcesso.length }}</span>
+    </div>
+    <div class="column-content">
+      <div *ngFor="let tarefa of tarefasEmProcesso"
+           class="task-card"
+           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
+           (click)="selecionarTarefa(tarefa)">
+        
+        <div class="task-header">
+          <h4>{{ tarefa.titulo }}</h4>
+          <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+
+        <p class="task-description" *ngIf="tarefa.descricao">{{ tarefa.descricao }}</p>
+
+        <div class="task-dates">
+          <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
+          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+        </div>
+
+        <div class="task-footer">
+          <div class="task-actions">
+            <button class="action-btn move" (click)="moverTarefa(tarefa, 'pendente'); $event.stopPropagation()">
+              <i class="material-icons">reply</i> Pendente
+            </button>
+            <button class="action-btn complete" (click)="moverTarefa(tarefa, 'finalizada'); $event.stopPropagation()">
+              <i class="material-icons">check</i> Concluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Concluidos -->
+  <div class="kanban-column">
+    <div class="column-header">
+      <h3>Concluidas</h3>
+      <span class="task-count">{{ tarefasFinalizadas.length }}</span>
+    </div>
+    <div class="column-content">
+      <div *ngFor="let tarefa of tarefasFinalizadas"
+           class="task-card"
+           [ngClass]="getPrioridadeColorClass(tarefa.prioridade)"
+           (click)="selecionarTarefa(tarefa)">
+        
+        <div class="task-header">
+          <h4>{{ tarefa.titulo }}</h4>
+          <button class="delete-btn" (click)="removerTarefa(tarefa.id); $event.stopPropagation()">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+
+        <p class="task-description" *ngIf="tarefa.descricao">{{ tarefa.descricao }}</p>
+
+        <div class="task-dates">
+          <small><strong>Início:</strong> {{ tarefa.dataInicio | date: 'dd/MM/yyyy' }}</small>
+          <small><strong>Fim:</strong> {{ tarefa.dataFim | date: 'dd/MM/yyyy' }}</small>
+        </div>
+
+        <div class="task-footer">
+          <div class="task-actions">
+            <button class="action-btn move" (click)="moverTarefa(tarefa, 'pendente'); $event.stopPropagation()">
+              <i class="material-icons">reply</i> Pendente
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-task-detail
+  [task]="tarefaSelecionada"
+  [isVisible]="modalAberto"
+  (close)="fecharModal()"
+></app-task-detail>

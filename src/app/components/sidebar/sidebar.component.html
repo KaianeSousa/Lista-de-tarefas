@@ -1,0 +1,18 @@
+<button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+
+<div class="sidebar" [class.active]="sidebarVisible">
+  <div class="sidebar-header">
+    <h2>To-Do List</h2>
+  </div>
+  
+  <nav class="sidebar-nav">
+    <ul class="menu-list">
+      <li *ngFor="let item of menuItems" 
+          class="menu-item" 
+          [class.active]="item.active"
+          (click)="onMenuItemClick(item)">
+        <span class="menu-label">{{ item.label }}</span>
+      </li>
+    </ul>
+  </nav>
+</div>

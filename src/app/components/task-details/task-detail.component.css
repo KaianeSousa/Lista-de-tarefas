@@ -1,0 +1,199 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-icon:hover {
+  background-color: #f1f1f1;
+}
+
+.close-icon .material-icons {
+  font-size: 24px;
+}
+
+.task-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-detail-container h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 24px;
+}
+
+.priority-badge {
+  padding: 4px 8px;
+  display: inline-block;   
+  border-radius: 5px;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bolder;
+  align-self: flex-start;
+  color: rgb(254, 249, 249);
+}
+
+.material-icons {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.add-task-btn .material-icons {
+  font-size: 20px; 
+  vertical-align: middle;
+}
+
+.priority-baixa { background-color: #12c548; }
+.priority-media { background-color: #fad626; color: #000; }
+.priority-alta { background-color: #fb972d; }
+.priority-urgente { background-color: #e41b1b; }
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  gap: 20px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.task-description h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.task-description p {
+  margin-top: 0;
+  line-height: 1.6;
+  color: #495057;
+  white-space: pre-line;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.edit-btn {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.form-group input:invalid:not(:focus),
+.form-group select:invalid:not(:focus),
+.form-group textarea:invalid:not(:focus) {
+  border-color: #e63737;
+}
+
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+  border-color: #e63737;
+}
+
+.error-message {
+  color: #e63737;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px 15px;
+  }
+  
+  .task-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
