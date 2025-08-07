@@ -1,8 +1,8 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background: #4a90e2;
-  color: white;
+  background: #520594;
+  color: #fff;
   padding: 20px 0px;
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -22,6 +22,7 @@
   margin: 0px;
   font-size: 24px;
   font-weight: 600;
+  color: #fff;
 }
 
 .sidebar-nav {
@@ -42,6 +43,7 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
+  color: #fff;
 }
 
 .menu-item:hover {
@@ -51,6 +53,12 @@
 .menu-item.active {
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item.active,
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
 }
 
 .menu-item:focus {
@@ -74,8 +82,8 @@
   position: fixed;
   top: 15px;
   left: 15px;
-  background: #4a90e2;
-  color: white;
+  background: #520594;
+  color: #fff;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
