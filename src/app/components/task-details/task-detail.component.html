@@ -78,7 +78,7 @@
             <div class="form-group">
               <label for="dataFim">Prazo</label>
               <input type="date" id="dataFim" [(ngModel)]="dataFimString" name="dataFim" required #dataFim="ngModel"
-                [min]="dataInicioString" (input)="onDataFimChange()">
+                (input)="onDataFimChange()">
               <div *ngIf="dataFim.invalid && (dataFim.dirty || dataFim.touched)" class="error-message">
                 Data final é obrigatória
               </div>

@@ -16,7 +16,7 @@ interface TaskForm {
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule],
 })
 export class TaskFormComponent {
   @Output() submitTask = new EventEmitter<{
@@ -26,7 +26,7 @@ export class TaskFormComponent {
     startDate: Date;
     endDate: Date;
   }>();
-  
+
   @Output() close = new EventEmitter<void>();
   @Input() isOpen = false;
 
@@ -65,16 +65,22 @@ export class TaskFormComponent {
 
   onDescricaoChange(): void {
     if (!this.formSubmitted) return;
-    const descricaoInput = document.querySelector('#descricao') as HTMLTextAreaElement;
+    const descricaoInput = document.querySelector(
+      '#descricao'
+    ) as HTMLTextAreaElement;
     this.descricaoInvalida = this.isEmpty(descricaoInput?.value || '');
-    this.erroDescricao = this.descricaoInvalida ? 'A descrição é obrigatória.' : null;
+    this.erroDescricao = this.descricaoInvalida
+      ? 'A descrição é obrigatória.'
+      : null;
     this.toggleInvalidClass(descricaoInput, this.descricaoInvalida);
   }
 
   onDataChange(): void {
     if (!this.formSubmitted) return;
-    
-    const startDateInput = document.querySelector('#dataInicio') as HTMLInputElement;
+
+    const startDateInput = document.querySelector(
+      '#dataInicio'
+    ) as HTMLInputElement;
     const endDateInput = document.querySelector('#dataFim') as HTMLInputElement;
 
     const startDateStr = startDateInput?.value || '';
@@ -114,10 +120,19 @@ export class TaskFormComponent {
 
   onPrioridadeChange(): void {
     if (!this.formSubmitted) return;
-    const prioridadeSelect = document.querySelector('#prioridade') as HTMLSelectElement;
+    const prioridadeSelect = document.querySelector(
+      '#prioridade'
+    ) as HTMLSelectElement;
     this.prioridadeInvalida = !prioridadeSelect?.value;
-    this.erroPrioridade = this.prioridadeInvalida ? 'Selecione uma prioridade.' : null;
+    this.erroPrioridade = this.prioridadeInvalida
+      ? 'Selecione uma prioridade.'
+      : null;
     this.toggleInvalidClass(prioridadeSelect, this.prioridadeInvalida);
+  }
+
+  private parseDateLocal(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 
   adicionarTarefa(): void {
@@ -127,13 +142,20 @@ export class TaskFormComponent {
     this.onDataChange();
     this.onPrioridadeChange();
 
-    if (!(this.erroTitulo || this.erroDescricao || this.erroData || this.erroPrioridade)) {
+    if (
+      !(
+        this.erroTitulo ||
+        this.erroDescricao ||
+        this.erroData ||
+        this.erroPrioridade
+      )
+    ) {
       this.submitTask.emit({
         title: this.task.title,
         description: this.task.description,
         priority: this.mapPrioridade(this.task.priority),
-        startDate: new Date(this.task.startDate),
-        endDate: new Date(this.task.endDate)
+        startDate: this.parseDateLocal(this.task.startDate),
+        endDate: this.parseDateLocal(this.task.endDate),
       });
       this.limparFormulario();
     }
@@ -163,7 +185,7 @@ export class TaskFormComponent {
     this.formSubmitted = false;
 
     const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => input.classList.remove('invalid'));
+    inputs.forEach((input) => input.classList.remove('invalid'));
   }
 
   private mapPrioridade(valor: string): 'baixa' | 'media' | 'alta' | 'urgente' {

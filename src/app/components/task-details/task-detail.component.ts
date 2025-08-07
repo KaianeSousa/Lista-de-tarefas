@@ -72,10 +72,15 @@ export class TaskDetailComponent implements AfterViewInit {
     }
   }
 
+  private parseDateLocal(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
   salvarEdicao(): void {
     if (this.taskEditado && this.formValido()) {
-      const dataFim = new Date(this.dataFimString);
-      const dataInicio = new Date(this.dataInicioString);
+      const dataFim = this.parseDateLocal(this.dataFimString);
+      const dataInicio = this.parseDateLocal(this.dataInicioString);
 
       if (isNaN(dataFim.getTime()) || dataFim < dataInicio) {
         this.dataFimInvalida = true;
