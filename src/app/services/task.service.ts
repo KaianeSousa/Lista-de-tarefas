@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private tarefas: Task[] = [];
@@ -18,15 +18,29 @@ export class TaskService {
     return this.tarefasSubject.asObservable();
   }
 
-  getTarefasPorStatus(status: 'pendente' | 'em-processo' | 'finalizada'): Task[] {
-    const tarefasFiltradas = this.tarefas.filter(t => t.status === status);
+  getTarefasPorStatus(
+    status: 'pendente' | 'em-processo' | 'finalizada'
+  ): Task[] {
+    const tarefasFiltradas = this.tarefas.filter((t) => t.status === status);
     return this.ordenarPorPrioridade(tarefasFiltradas);
   }
 
-  adicionar(titulo: string, descricao: string, prioridade: 'baixa' | 'media' | 'alta' | 'urgente', dataInicio: Date, dataFim: Date): void {
+  adicionar(
+    titulo: string,
+    descricao: string,
+    prioridade: 'baixa' | 'media' | 'alta' | 'urgente',
+    dataInicio: Date,
+    dataFim: Date
+  ): void {
     console.log('TaskService: adicionar chamado');
-    console.log('Parâmetros:', { titulo, descricao, prioridade, dataInicio, dataFim });
-    
+    console.log('Parâmetros:', {
+      titulo,
+      descricao,
+      prioridade,
+      dataInicio,
+      dataFim,
+    });
+
     const nova: Task = {
       id: this.proximoId++,
       titulo,
@@ -35,24 +49,27 @@ export class TaskService {
       status: 'pendente',
       prioridade,
       dataInicio,
-      dataFim
+      dataFim,
     };
-    
+
     console.log('Nova tarefa criada:', nova);
     this.tarefas.push(nova);
     console.log('Tarefas após adicionar:', this.tarefas);
-    
+
     this.tarefasSubject.next([...this.tarefas]);
     console.log('Observable atualizado');
   }
 
   remover(id: number): void {
-    this.tarefas = this.tarefas.filter(t => t.id !== id);
+    this.tarefas = this.tarefas.filter((t) => t.id !== id);
     this.tarefasSubject.next([...this.tarefas]);
   }
 
-  atualizarStatus(id: number, novoStatus: 'pendente' | 'em-processo' | 'finalizada'): void {
-    const tarefa = this.tarefas.find(t => t.id === id);
+  atualizarStatus(
+    id: number,
+    novoStatus: 'pendente' | 'em-processo' | 'finalizada'
+  ): void {
+    const tarefa = this.tarefas.find((t) => t.id === id);
     if (tarefa) {
       tarefa.status = novoStatus;
       tarefa.modificadaEm = new Date();
@@ -60,16 +77,38 @@ export class TaskService {
     }
   }
 
+  atualizarTarefa(tarefaAtualizada: Task): void {
+    const index = this.tarefas.findIndex((t) => t.id === tarefaAtualizada.id);
+    if (index !== -1) {
+      this.tarefas[index] = {
+        ...tarefaAtualizada,
+        modificadaEm: new Date(),
+      };
+      this.tarefasSubject.next([...this.tarefas]);
+    }
+  }
+
   getTarefa(id: number): Task | undefined {
-    return this.tarefas.find(t => t.id === id);
+    return this.tarefas.find((t) => t.id === id);
   }
 
   existeTarefaComTitulo(titulo: string): boolean {
-    return this.tarefas.some(t => t.titulo.toLowerCase().trim() === titulo.toLowerCase().trim());
+    return this.tarefas.some(
+      (t) => t.titulo.toLowerCase().trim() === titulo.toLowerCase().trim()
+    );
   }
 
   private ordenarPorPrioridade(tarefas: Task[]): Task[] {
-    const ordemPrioridade = { 'urgente': 4, 'alta': 3, 'media': 2, 'baixa': 1 };
-    return tarefas.sort((a, b) => ordemPrioridade[b.prioridade] - ordemPrioridade[a.prioridade]);
+    const ordemPrioridade = { urgente: 4, alta: 3, media: 2, baixa: 1 };
+    return tarefas.sort((a, b) => {
+      // Primeiro ordena por prioridade (maior para menor)
+      const prioridadeDiff =
+        ordemPrioridade[b.prioridade] - ordemPrioridade[a.prioridade];
+      if (prioridadeDiff !== 0) {
+        return prioridadeDiff;
+      }
+      // Se a prioridade for igual, ordena por data de criação (mais antiga primeiro)
+      return new Date(a.criadaEm).getTime() - new Date(b.criadaEm).getTime();
+    });
   }
 }

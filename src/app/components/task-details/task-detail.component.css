@@ -58,7 +58,7 @@
 
 .priority-badge {
   padding: 4px 8px;
-  display: inline-block;   
+  display: inline-block;
   border-radius: 5px;
   margin-top: 5px;
   text-align: center;
@@ -74,14 +74,23 @@
 }
 
 .add-task-btn .material-icons {
-  font-size: 20px; 
+  font-size: 20px;
   vertical-align: middle;
 }
 
-.priority-baixa { background-color: #12c548; }
-.priority-media { background-color: #fad626; color: #000; }
-.priority-alta { background-color: #fb972d; }
-.priority-urgente { background-color: #e41b1b; }
+.priority-baixa {
+  background-color: #12c548;
+}
+.priority-media {
+  background-color: #fad626;
+  color: #000;
+}
+.priority-alta {
+  background-color: #fb972d;
+}
+.priority-urgente {
+  background-color: #e41b1b;
+}
 
 .task-meta {
   display: flex;
@@ -151,6 +160,19 @@
   min-height: 100px;
 }
 
+.date-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .date-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -191,7 +213,7 @@
     width: 95%;
     padding: 20px 15px;
   }
-  
+
   .task-meta {
     flex-direction: column;
     gap: 8px;

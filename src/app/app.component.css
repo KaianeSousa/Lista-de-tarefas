@@ -33,7 +33,7 @@
 }
 
 .add-task-btn {
-  background: #4a90e2;
+  background: #520594;
   color: white;
   border: none;
   padding: 15px 25px;
@@ -53,16 +53,16 @@
 }
 
 .add-task-btn:hover {
-  background: #357abd;
+  background: #7628b6;
 }
 
 .add-task-btn:focus {
-  outline: 2px solid #4a90e2;
+  outline: 2px solid #520594;
   outline-offset: 2px;
 }
 
 .add-task-btn:active {
-  background: #4a90e2;
+  background: #520594;
 }
 
 /* Responsividade */
@@ -71,13 +71,13 @@
     margin-left: 0px;
     padding: 10px;
   }
-  
+
   .content-header {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
-  
+
   .content-header h1 {
     font-size: 24px;
   }

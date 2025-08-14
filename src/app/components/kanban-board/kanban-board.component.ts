@@ -18,7 +18,6 @@ export class KanbanBoardComponent implements OnInit, OnDestroy {
   tarefasFinalizadas: Task[] = [];
   tarefaSelecionada: Task | null = null;
   modalAberto: boolean = false;
-  
 
   private subscription: Subscription = new Subscription();
 
@@ -39,8 +38,10 @@ export class KanbanBoardComponent implements OnInit, OnDestroy {
   carregarTarefas(): void {
     try {
       this.tarefasPendentes = this.taskService.getTarefasPorStatus('pendente');
-      this.tarefasEmProcesso = this.taskService.getTarefasPorStatus('em-processo');
-      this.tarefasFinalizadas = this.taskService.getTarefasPorStatus('finalizada');
+      this.tarefasEmProcesso =
+        this.taskService.getTarefasPorStatus('em-processo');
+      this.tarefasFinalizadas =
+        this.taskService.getTarefasPorStatus('finalizada');
     } catch (error: unknown) {
       console.error('Erro ao carregar tarefas:', error);
     }
@@ -51,7 +52,10 @@ export class KanbanBoardComponent implements OnInit, OnDestroy {
     this.modalAberto = true;
   }
 
-  moverTarefa(tarefa: Task, novoStatus: 'pendente' | 'em-processo' | 'finalizada'): void {
+  moverTarefa(
+    tarefa: Task,
+    novoStatus: 'pendente' | 'em-processo' | 'finalizada'
+  ): void {
     try {
       if (tarefa.status === 'finalizada' && novoStatus === 'em-processo') {
         alert('Tarefas concluídas não podem voltar para "Em andamento"');
@@ -80,6 +84,16 @@ export class KanbanBoardComponent implements OnInit, OnDestroy {
   fecharModal(): void {
     this.modalAberto = false;
     this.tarefaSelecionada = null;
+  }
+
+  editarTarefa(tarefaEditada: Task): void {
+    try {
+      this.taskService.atualizarTarefa(tarefaEditada);
+      this.fecharModal();
+    } catch (error: unknown) {
+      console.error('Erro ao editar tarefa:', error);
+      alert('Ocorreu um erro ao tentar editar a tarefa.');
+    }
   }
 
   getPrioridadeColorClass(prioridade: Task['prioridade']): string {
